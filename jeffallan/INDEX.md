@@ -1,0 +1,72 @@
+# Jeffallan Claude Skills Index
+Source: https://github.com/Jeffallan/claude-skills
+Fetched: Sat Mar 21 09:01:00 UTC 2026
+
+- angular-architect — description: Generates Angular 17+ standalone components, configures advanced routing with
+- api-designer — description: Use when designing REST or GraphQL APIs, creating OpenAPI specifications, or 
+- architecture-designer — description: Use when designing new high-level system architecture, reviewing existing des
+- atlassian-mcp — description: Integrates with Atlassian products to manage project tracking and documentati
+- chaos-engineer — description: Designs chaos experiments, creates failure injection frameworks, and facilita
+- cli-developer — description: Use when building CLI tools, implementing argument parsing, or adding interac
+- cloud-architect — description: Designs cloud architectures, creates migration plans, generates cost optimiza
+- code-documenter — description: Generates, formats, and validates technical documentation — including docst
+- code-reviewer — description: Analyzes code diffs and files to identify bugs, security vulnerabilities (SQL
+- cpp-pro — description: Writes, optimizes, and debugs C++ applications using modern C++20/23 features
+- csharp-developer — description: "Use when building C# applications with .NET 8+, ASP.NET Core APIs, or Blazor
+- database-optimizer — description: Optimizes database queries and improves performance across PostgreSQL and MyS
+- debugging-wizard — description: Parses error messages, traces execution flow through stack traces, correlates
+- devops-engineer — description: Creates Dockerfiles, configures CI/CD pipelines, writes Kubernetes manifests,
+- django-expert — description: "Use when building Django web applications or REST APIs with Django REST Fram
+- dotnet-core-expert — description: Use when building .NET 8 applications with minimal APIs, clean architecture, 
+- embedded-systems — description: Use when developing firmware for microcontrollers, implementing RTOS applicat
+- fastapi-expert — description: "Use when building high-performance async Python APIs with FastAPI and Pydant
+- feature-forge — description: Conducts structured requirements workshops to produce feature specifications,
+- fine-tuning-expert — description: "Use when fine-tuning LLMs, training custom models, or adapting foundation mo
+- flutter-expert — description: Use when building cross-platform applications with Flutter 3+ and Dart. Invok
+- fullstack-guardian — description: Builds security-focused full-stack web applications by implementing integrate
+- game-developer — description: "Use when building game systems, implementing Unity/Unreal Engine features, o
+- golang-pro — description: Implements concurrent Go patterns using goroutines and channels, designs and 
+- graphql-architect — description: Use when designing GraphQL schemas, implementing Apollo Federation, or buildi
+- java-architect — description: Use when building, configuring, or debugging enterprise Java applications wit
+- javascript-pro — description: Writes, debugs, and refactors JavaScript code using modern ES2023+ features, 
+- kotlin-specialist — description: Provides idiomatic Kotlin implementation patterns including coroutine concurr
+- kubernetes-specialist — description: Use when deploying or managing Kubernetes workloads. Invoke to create deploym
+- laravel-specialist — description: Build and configure Laravel 10+ applications, including creating Eloquent mod
+- legacy-modernizer — description: Designs incremental migration strategies, identifies service boundaries, prod
+- mcp-developer — description: Use when building, debugging, or extending MCP servers or clients that connec
+- microservices-architect — description: Designs distributed system architectures, decomposes monoliths into bounded-c
+- ml-pipeline — description: "Designs and implements production-grade ML pipeline infrastructure: configur
+- monitoring-expert — description: Configures monitoring systems, implements structured logging pipelines, creat
+- nestjs-expert — description: Creates and configures NestJS modules, controllers, services, DTOs, guards, a
+- nextjs-developer — description: "Use when building Next.js 14+ applications with App Router, server component
+- pandas-pro — description: Performs pandas DataFrame operations for data analysis, manipulation, and tra
+- php-pro — description: Use when building PHP applications with modern PHP 8.3+ features, Laravel, or
+- playwright-expert — description: "Use when writing E2E tests with Playwright, setting up test infrastructure, 
+- postgres-pro — description: Use when optimizing PostgreSQL queries, configuring replication, or implement
+- prompt-engineer — description: Writes, refactors, and evaluates prompts for LLMs — generating optimized pr
+- python-pro — description: Use when building Python 3.11+ applications requiring type safety, async prog
+- rag-architect — description: Designs and implements production-grade RAG systems by chunking documents, ge
+- rails-expert — description: Rails 7+ specialist that optimizes Active Record queries with includes/eager_
+- react-expert — description: Use when building React 18+ applications in .jsx or .tsx files, Next.js App R
+- react-native-expert — description: Builds, optimizes, and debugs cross-platform mobile applications with React N
+- rust-engineer — description: Writes, reviews, and debugs idiomatic Rust code with memory safety and zero-c
+- salesforce-developer — description: Writes and debugs Apex code, builds Lightning Web Components, optimizes SOQL 
+- secure-code-guardian — description: Use when implementing authentication/authorization, securing user input, or p
+- security-reviewer — description: Identifies security vulnerabilities, generates structured audit reports with 
+- shopify-expert — description: Builds and debugs Shopify themes (.liquid files, theme.json, sections), devel
+- spark-engineer — description: Use when writing Spark jobs, debugging performance issues, or configuring clu
+- spec-miner — description: "Reverse-engineering specialist that extracts specifications from existing co
+- spring-boot-engineer — description: Generates Spring Boot 3.x configurations, creates REST controllers, implement
+- sql-pro — description: Optimizes SQL queries, designs database schemas, and troubleshoots performanc
+- sre-engineer — description: Defines service level objectives, creates error budget policies, designs inci
+- swift-expert — description: Builds iOS/macOS/watchOS/tvOS applications, implements SwiftUI views and stat
+- terraform-engineer — description: Use when implementing infrastructure as code with Terraform across AWS, Azure
+- test-master — description: Generates test files, creates mocking strategies, analyzes code coverage, des
+- the-fool — description: Use when challenging ideas, plans, decisions, or proposals using structured c
+- typescript-pro — description: Implements advanced TypeScript type systems, creates custom type guards, util
+- vue-expert-js — description: Creates Vue 3 components, builds vanilla JS composables, configures Vite proj
+- vue-expert — description: Builds Vue 3 components with Composition API patterns, configures Nuxt 3 SSR/
+- websocket-engineer — description: Use when building real-time communication systems with WebSockets or Socket.I
+- wordpress-pro — description: Develops custom WordPress themes and plugins, creates and registers Gutenberg
+
+**Total: 66 skills**
