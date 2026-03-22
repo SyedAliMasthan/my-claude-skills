@@ -1,0 +1,122 @@
+# Affaan Everything-Claude-Code Skills Index
+Source: https://github.com/affaan-m/everything-claude-code
+Fetched: Sun Mar 22 03:43:24 UTC 2026
+
+- agent-eval —  Head-to-head comparison of coding agents (Claude Code, Aider, Codex, etc.) on custom task
+- agent-harness-construction —  Design and optimize AI agent action spaces, tool definitions, and observation formatting 
+- agentic-engineering —  Operate as an agentic engineer using eval-first execution, decomposition, and cost-aware 
+- ai-first-engineering —  Engineering operating model for teams where AI agents generate a large share of implement
+- ai-regression-testing —  Regression testing strategies for AI-assisted development. Sandbox-mode API testing witho
+- android-clean-architecture —  Clean Architecture patterns for Android and Kotlin Multiplatform projects — module stru
+- api-design —  REST API design patterns including resource naming, status codes, pagination, filtering, 
+- architecture-decision-records —  Capture architectural decisions made during Claude Code sessions as structured ADRs. Auto
+- article-writing —  Write articles, guides, blog posts, tutorials, newsletter issues, and other long-form con
+- autonomous-loops —  "Patterns and architectures for autonomous Claude Code loops — from simple sequential p
+- backend-patterns —  Backend architecture patterns, API design, database optimization, and server-side best pr
+- blueprint —  >-
+- bun-runtime —  Bun as runtime, package manager, bundler, and test runner. When to choose Bun vs Node, mi
+- carrier-relationship-management —  >
+- claude-api —  Anthropic Claude API patterns for Python and TypeScript. Covers Messages API, streaming, 
+- claude-devfleet —  Orchestrate multi-agent coding tasks via Claude DevFleet — plan projects, dispatch para
+- clickhouse-io —  ClickHouse database patterns, query optimization, analytics, and data engineering best pr
+- codebase-onboarding —  Analyze an unfamiliar codebase and generate a structured onboarding guide with architectu
+- coding-standards —  Universal coding standards, best practices, and patterns for TypeScript, JavaScript, Reac
+- compose-multiplatform-patterns —  Compose Multiplatform and Jetpack Compose patterns for KMP projects — state management,
+- configure-ecc —  Interactive installer for Everything Claude Code — guides users through selecting and i
+- content-engine —  Create platform-native content systems for X, LinkedIn, TikTok, YouTube, newsletters, and
+- content-hash-cache-pattern —  Cache expensive file processing results using SHA-256 content hashes — path-independent
+- context-budget —  Audits Claude Code context window consumption across agents, skills, MCP servers, and rul
+- continuous-agent-loop —  Patterns for continuous autonomous agent loops with quality gates, evals, and recovery co
+- continuous-learning-v2 —  Instinct-based learning system that observes sessions via hooks, creates atomic instincts
+- continuous-learning —  Automatically extract reusable patterns from Claude Code sessions and save them as learne
+- cost-aware-llm-pipeline —  Cost optimization patterns for LLM API usage — model routing by task complexity, budget
+- cpp-coding-standards —  C++ coding standards based on the C++ Core Guidelines (isocpp.github.io). Use when writin
+- cpp-testing —  Use only when writing/updating/fixing C++ tests, configuring GoogleTest/CTest, diagnosing
+- crosspost —  Multi-platform content distribution across X, LinkedIn, Threads, and Bluesky. Adapts cont
+- customs-trade-compliance —  >
+- data-scraper-agent —  Build a fully automated AI-powered data collection agent for any public source — job bo
+- database-migrations —  Database migration best practices for schema changes, data migrations, rollbacks, and zer
+- deep-research —  Multi-source deep research using firecrawl and exa MCPs. Searches the web, synthesizes fi
+- deployment-patterns —  Deployment workflows, CI/CD pipeline patterns, Docker containerization, health checks, ro
+- django-patterns —  Django architecture patterns, REST API design with DRF, ORM best practices, caching, sign
+- django-security —  Django security best practices, authentication, authorization, CSRF protection, SQL injec
+- django-tdd —  Django testing strategies with pytest-django, TDD methodology, factory_boy, mocking, cove
+- django-verification —  "Verification loop for Django projects: migrations, linting, tests with coverage, securit
+- dmux-workflows —  Multi-agent orchestration using dmux (tmux pane manager for AI agents). Patterns for para
+- docker-patterns —  Docker and Docker Compose patterns for local development, container security, networking,
+- documentation-lookup —  Use up-to-date library and framework docs via Context7 MCP instead of training data. Acti
+- e2e-testing —  Playwright E2E testing patterns, Page Object Model, configuration, CI/CD integration, art
+- energy-procurement —  >
+- enterprise-agent-ops —  Operate long-lived agent workloads with observability, security boundaries, and lifecycle
+- eval-harness —  Formal evaluation framework for Claude Code sessions implementing eval-driven development
+- exa-search —  Neural search via Exa MCP for web, code, and company research. Use when the user needs we
+- fal-ai-media —  Unified media generation via fal.ai MCP — image, video, and audio. Covers text-to-image
+- flutter-dart-code-review —  Library-agnostic Flutter/Dart code review checklist covering widget best practices, state
+- foundation-models-on-device —  Apple FoundationModels framework for on-device LLM — text generation, guided generation
+- frontend-patterns —  Frontend development patterns for React, Next.js, state management, performance optimizat
+- frontend-slides —  Create stunning, animation-rich HTML presentations from scratch or by converting PowerPoi
+- golang-patterns —  Idiomatic Go patterns, best practices, and conventions for building robust, efficient, an
+- golang-testing —  Go testing patterns including table-driven tests, subtests, benchmarks, fuzzing, and test
+- inventory-demand-planning —  >
+- investor-materials —  Create and update pitch decks, one-pagers, investor memos, accelerator applications, fina
+- investor-outreach —  Draft cold emails, warm intro blurbs, follow-ups, update emails, and investor communicati
+- iterative-retrieval —  Pattern for progressively refining context retrieval to solve the subagent context proble
+- java-coding-standards —  "Java coding standards for Spring Boot services: naming, immutability, Optional usage, st
+- jpa-patterns —  JPA/Hibernate patterns for entity design, relationships, query optimization, transactions
+- kotlin-coroutines-flows —  Kotlin Coroutines and Flow patterns for Android and KMP — structured concurrency, Flow 
+- kotlin-exposed-patterns —  JetBrains Exposed ORM patterns including DSL queries, DAO pattern, transactions, HikariCP
+- kotlin-ktor-patterns —  Ktor server patterns including routing DSL, plugins, authentication, Koin DI, kotlinx.ser
+- kotlin-patterns —  Idiomatic Kotlin patterns, best practices, and conventions for building robust, efficient
+- kotlin-testing —  Kotlin testing patterns with Kotest, MockK, coroutine testing, property-based testing, an
+- laravel-patterns —  Laravel architecture patterns, routing/controllers, Eloquent ORM, service layers, queues,
+- laravel-security —  Laravel security best practices for authn/authz, validation, CSRF, mass assignment, file 
+- laravel-tdd —  Test-driven development for Laravel with PHPUnit and Pest, factories, database testing, f
+- laravel-verification —  Verification loop for Laravel projects: env checks, linting, static analysis, tests with 
+- liquid-glass-design —  iOS 26 Liquid Glass design system — dynamic glass material with blur, reflection, and i
+- logistics-exception-management —  >
+- market-research —  Conduct market research, competitive analysis, investor due diligence, and industry intel
+- mcp-server-patterns —  Build MCP servers with Node/TypeScript SDK — tools, resources, prompts, Zod validation,
+- nanoclaw-repl —  Operate and extend NanoClaw v2, ECC's zero-dependency session-aware REPL built on claude 
+- nextjs-turbopack —  Next.js 16+ and Turbopack — incremental bundling, FS caching, dev speed, and when to us
+- nutrient-document-processing —  Process, convert, OCR, extract, redact, sign, and fill documents using the Nutrient DWS A
+- nuxt4-patterns —  Nuxt 4 app patterns for hydration safety, performance, route rules, lazy loading, and SSR
+- perl-patterns —  Modern Perl 5.36+ idioms, best practices, and conventions for building robust, maintainab
+- perl-security —  Comprehensive Perl security covering taint mode, input validation, safe process execution
+- perl-testing —  Perl testing patterns using Test2::V0, Test::More, prove runner, mocking, coverage with D
+- plankton-code-quality —  "Write-time code quality enforcement using Plankton — auto-formatting, linting, and Cla
+- postgres-patterns —  PostgreSQL database patterns for query optimization, schema design, indexing, and securit
+- production-scheduling —  >
+- project-guidelines-example —  "Example project-specific skill template based on a real production application."
+- prompt-optimizer —  >-
+- python-patterns —  Pythonic idioms, PEP 8 standards, type hints, and best practices for building robust, eff
+- python-testing —  Python testing strategies using pytest, TDD methodology, fixtures, mocking, parametrizati
+- pytorch-patterns —  PyTorch deep learning patterns and best practices for building robust, efficient, and rep
+- quality-nonconformance —  >
+- ralphinho-rfc-pipeline —  RFC-driven multi-agent DAG execution pattern with quality gates, merge queues, and work u
+- regex-vs-llm-structured-text —  Decision framework for choosing between regex and LLM when parsing structured text — st
+- returns-reverse-logistics —  >
+- rules-distill —  "Scan skills to extract cross-cutting principles and distill them into rules — append, 
+- rust-patterns —  Idiomatic Rust patterns, ownership, error handling, traits, concurrency, and best practic
+- rust-testing —  Rust testing patterns including unit tests, integration tests, async testing, property-ba
+- search-first —  Research-before-coding workflow. Search for existing tools, libraries, and patterns befor
+- security-review —  Use this skill when adding authentication, handling user input, working with secrets, cre
+- security-scan —  Scan your Claude Code configuration (.claude/ directory) for security vulnerabilities, mi
+- skill-stocktake —  "Use when auditing Claude skills and commands for quality. Supports Quick Scan (changed s
+- springboot-patterns —  Spring Boot architecture patterns, REST API design, layered services, data access, cachin
+- springboot-security —  Spring Security best practices for authn/authz, validation, CSRF, secrets, headers, rate 
+- springboot-tdd —  Test-driven development for Spring Boot using JUnit 5, Mockito, MockMvc, Testcontainers, 
+- springboot-verification —  "Verification loop for Spring Boot projects: build, static analysis, tests with coverage,
+- strategic-compact —  Suggests manual context compaction at logical intervals to preserve context through task 
+- swift-actor-persistence —  Thread-safe data persistence in Swift using actors — in-memory cache with file-backed s
+- swift-concurrency-6-2 —  Swift 6.2 Approachable Concurrency — single-threaded by default, @concurrent for explic
+- swift-protocol-di-testing —  Protocol-based dependency injection for testable Swift code — mock file system, network
+- swiftui-patterns —  SwiftUI architecture patterns, state management with @Observable, view composition, navig
+- tdd-workflow —  Use this skill when writing new features, fixing bugs, or refactoring code. Enforces test
+- team-builder —  Interactive agent picker for composing and dispatching parallel teams
+- verification-loop —  "A comprehensive verification system for Claude Code sessions."
+- video-editing —  AI-assisted video editing workflows for cutting, structuring, and augmenting real footage
+- videodb —  See, Understand, Act on video and audio. See- ingest from local files, URLs, RTSP/live fe
+- visa-doc-translate —  Translate visa application documents (images) to English and create a bilingual PDF with 
+- x-api —  X/Twitter API integration for posting tweets, threads, reading timelines, search, and ana
+
+**Total: 116 skills**
