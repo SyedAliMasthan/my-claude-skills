@@ -74,19 +74,64 @@ Source of truth: April 2026 final roster (Book1.xlsx).
   - Every TUE: both Vijayan AND Rajesh are on WO → Night must be covered
     by rotational L2 on those days (SLA-driven Night assignment).
 
-### Rule 3 — Rotational L2 Shift Assignment
+### Rule 13 — Rotational L2 Shift Assignment
 Applies to: Srinivasan Palraj, Reddy Srinivasulu, Saravanan, VaraPrasad.
 
-- **Primary rotation = Morning (M) and Afternoon (A) in weekly blocks.**
-- **Night (N) is allowed** but ONLY when needed to meet the 2N/day SLA —
+#### No fixed weekly block — SLA-driven daily assignment
+
+There is NO fixed "one shift per week" rule. Each day's shift is assigned
+based on what the SLA needs that day, subject to physical rest constraints.
+
+#### Physical rest constraints (non-negotiable)
+
+| Previous day | Next day allowed | Next day NOT allowed |
+|---|---|---|
+| M (ends 4PM) | M, A, N, WO | — (anything is fine after M) |
+| A (ends 10PM) | A, N, WO | ✗ M (A ends 10PM → M starts 7AM = <9hrs rest) |
+| N (ends 7:30AM) | WO, N | ✗ M, ✗ A (N ends 7:30AM → need full rest day first) |
+| WO / L | M, A, N, WO | — (fresh start after rest) |
+
+#### Valid shift sequences (examples)
+
+```
+M M M M M       ✓  all Morning
+A A A A A       ✓  all Afternoon
+N N WO WO       ✓  Night block then rest
+M M A A N N WO  ✓  M then A then N then WO rest
+M M N N WO WO   ✓  M then direct to N (skip A if SLA needs Night)
+A A N N WO WO   ✓  A then N then rest
+M A A N N WO    ✓  valid progression
+```
+
+#### Invalid sequences (rest constraint violations)
+
+```
+A M     ✗  A ends 10PM, M starts 7AM — not enough rest
+N M     ✗  N ends 7:30AM, M starts 7AM — impossible
+N A     ✗  N ends 7:30AM, A starts 1PM — not enough rest
+M A M   ✗  went back to M after A (A→M not allowed)
+N N M   ✗  went to M directly after N (need WO first)
+N N A   ✗  went to A directly after N (need WO first)
+```
+
+#### Night assignment rule
+
+- Night (N) is allowed for rotational L2 but is NOT their primary shift.
+- Night is assigned ONLY when needed to meet the 2N/day SLA —
   specifically on days when Vijayan and/or Rajesh are on WO.
-- Night is NOT their default. It is a gap-fill role only.
-- Within any week, shifts follow strict **M → A → N** order — no reversal:
-  - Once on A this week → remaining days must be A or N (not back to M)
-  - Once on N this week → remaining days must be N (not back to M or A)
-  - Valid: M M M M M / A A A A A / M M A A A / M A A N N / A A N N N
-  - Invalid: M A M / A M / N A / N M (any backward step) ✗
-- After a Night week → WO days act as natural rest before next week resets.
+- After a Night block → engineer must have WO (rest day) before
+  returning to M or A.
+
+#### Leave adjustment rule
+
+- If an engineer is on approved Leave → their shift slot is empty that day.
+- Other available rotational L2 absorb the SLA gap by being assigned
+  the most needed shift (M, A, or N) that day.
+- WO days are FIXED — they do not move because someone else is on Leave.
+- Only the shift type of working engineers is adjusted, never their WO days.
+- Example: If Srinivasan is on Leave on a day needing 2M →
+  Srinivasulu or Saravanan gets M that day even if their natural
+  rotation would have been A — SLA takes priority.
 
 ### Rule 4 — Dinesh (Day-Only)
 - Dinesh = **Morning (M) primarily**, Afternoon (A) occasionally.
@@ -305,4 +350,4 @@ This is correct and expected — Night is allowed for SLA gap-fill only.
 | Rotational L2 Night = SLA gap only | Not primary | Primary Night = Vijayan+Rajesh only. Others fill when needed. |
 | L3 bank SAT comp = next MON | Policy | Working bank SAT earns a comp Monday off. |
 | No SAT/SUN WO for L2 | Policy | Except Dinesh's SUN which is his fixed pattern exception. |
-| M→A→N weekly order | Shift health | No juggling shifts within a week. Once progressed, no reversal. |
+| Shift assignment = SLA-driven | Shift health | No fixed weekly block. Each day assigned based on SLA need. Physical rest constraints: A→M invalid (10PM→7AM), N→M/A invalid (need WO rest after Night). After Night block → WO before any shift. |
