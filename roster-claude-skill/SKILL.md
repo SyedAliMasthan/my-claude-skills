@@ -8,33 +8,35 @@ description: >
   Covers: L3/L2 role rules, WO logic, shift rotation (M→A→N), SLA validation,
   bank Saturday rules, night-only workers, and Excel output generation.
 author: Syed Ali Masthan
-version: 1.0.0
+version: 2.0.0
 team: Indian Bank DC — Infrastructure Operations (Jio Platforms)
+last_updated: March 2026
 ---
 
-# Roster Claude Skill
+# Roster Claude Skill — v2.0
 
 ## Overview
-This skill encodes all roster-generation rules, WO logic, SLA constraints,
+This skill encodes ALL roster-generation rules, WO logic, SLA constraints,
 and shift patterns for the Indian Bank DC Infrastructure Operations team.
 Use it every time a monthly roster needs to be created or validated.
+Source of truth: April 2026 final roster (Book1.xlsx).
 
 ---
 
 ## Team Composition
 
-| Name | Skill | Level | Type |
-|---|---|---|---|
-| Syed Ali | Linux | L3 | Always Afternoon (A) |
-| Purushothaman Kumar | VMware+Windows | L3 | Always Morning (M) |
-| Vijayan | OpenShift | L2 | Night-only (permanent) |
-| Rajesh Chandran | Backup | L2 | Night-only (permanent) |
-| Srinivasan Palraj | VMware+Windows | L2 | Rotational M/A/N |
-| Reddy Srinivasulu | Backup | L2 | Rotational M/A/N |
-| Saravanan | VMware+Windows | L2 | Rotational M/A/N |
-| Dinesh Ananthaneni | Linux | L2 | Day-only (M primary) |
-| VaraPrasad | VMware+Windows | L2 | Rotational M/A/N |
-| Venkata Raju | Linux | L2 | Special (see below) |
+| Name | Skill | Level | Shift Type | WO Pattern |
+|---|---|---|---|---|
+| Syed Ali | Linux | L3 | Always Afternoon (A) | SAT+SUN (bank SAT comp on MON) |
+| Purushothaman Kumar | VMware+Windows | L3 | Always Morning (M) | SAT+SUN (bank SAT comp on MON) |
+| Vijayan | OpenShift | L2 | Night-only permanent | MON+TUE every week |
+| Rajesh Chandran | Backup | L2 | Night-only permanent | TUE+WED every week |
+| Srinivasan Palraj | VMware+Windows | L2 | Rotational M/A (N only for SLA gap) | THU+FRI every week |
+| Reddy Srinivasulu | Backup | L2 | Rotational M/A (N only for SLA gap) | TUE+WED every week |
+| Saravanan | VMware+Windows | L2 | Rotational M/A (N only for SLA gap) | THU+FRI every week |
+| Dinesh Ananthaneni | Linux | L2 | Day-only M/A (never Night) | SUN+MON every week |
+| VaraPrasad | VMware+Windows | L2 | Rotational M/A (N only for SLA gap) | WED+THU every week |
+| Venkata Raju | Linux | L2 | Special — see below | 2-3 WOs in days 1-8 only |
 
 ---
 
@@ -56,190 +58,251 @@ Use it every time a monthly roster needs to be created or validated.
 
 ## Core Shift Rules
 
-### L3 Rules (Syed Ali & Purushothaman)
-- Syed Ali → **Always Afternoon (A)**. Never M or N.
-- Purushothaman → **Always Morning (M)**. Never A or N.
-- L3 WO pattern: **SAT + SUN** every week.
-- **Bank Saturday rule**: 1st, 3rd, and 5th Saturday of the month are bank
-  working days. At least one L3 must work on each bank Saturday.
-  Rotate between Syed (works 3rd SAT) and Purushothaman (works 1st and 5th SAT).
-  On non-bank Saturdays (2nd, 4th), both L3 can be WO.
+### Rule 1 — L3 Fixed Shifts
+- **Syed Ali → Always Afternoon (A)**. Never M or N.
+- **Purushothaman Kumar → Always Morning (M)**. Never A or N.
+- L3 are never assigned Night under any circumstance.
 
-### Night-Only Workers (Vijayan & Rajesh)
-- **Vijayan**: Night (N) every working day. WO = **MON + TUE** every week. Fixed, never changes.
-- **Rajesh**: Night (N) every working day. WO = **TUE + WED** every week (consecutive).
-  - WO must be consecutive weekdays. Cannot split across non-adjacent days.
-  - TUE+WED chosen because: MON+TUE clashes with Vijayan (both Night workers off = 0 Night coverage);
-    WED+THU is unsafe (THU already has 3 others on WO → SLA breach).
-  - On Rajesh WO days (TUE), Vijayan is also WO → Night must be covered by rotational L2.
+### Rule 2 — Night-Only Workers (Vijayan & Rajesh only)
+- **Vijayan** = Night (N) every working day. These two are the ONLY
+- **Rajesh Chandran** = Night (N) every working day. dedicated permanent night workers.
+- No other engineer is permanently assigned Night.
+- Vijayan WO = **MON + TUE** every week (fixed, consecutive, never changes).
+- Rajesh WO = **TUE + WED** every week (fixed, consecutive).
+  - TUE+WED chosen because: MON+TUE clashes with Vijayan (both off = zero dedicated Night);
+    WED+THU unsafe (THU already has 3 L2 on WO → SLA breach).
+  - Every TUE: both Vijayan AND Rajesh are on WO → Night must be covered
+    by rotational L2 on those days (SLA-driven Night assignment).
 
-### Day-Only Worker (Dinesh)
-- Dinesh → **Morning (M) primarily**, Afternoon (A) occasionally. **Never Night (N)**.
-- WO = **SUN + MON** every week. Sunday is an exception allowed for Dinesh only
-  (all other L2 cannot take SAT/SUN WO).
-- ES (Extended Shift) may be assigned occasionally.
+### Rule 3 — Rotational L2 Shift Assignment
+Applies to: Srinivasan Palraj, Reddy Srinivasulu, Saravanan, VaraPrasad.
 
-### Rotational L2 (Srinivasan, Srinivasulu, Saravanan, VaraPrasad)
-- Rotate through M, A, N in **weekly blocks**.
-- **Shift order within a week is strictly M → A → N**. No reversal allowed:
-  - Once on A this week → remaining days must be A or N only (not back to M).
-  - Once on N this week → remaining days must be N only (not back to M or A).
-- After a Night week → WO days act as rest before next week starts fresh.
-- Max **2 Night shifts per day** across entire team.
+- **Primary rotation = Morning (M) and Afternoon (A) in weekly blocks.**
+- **Night (N) is allowed** but ONLY when needed to meet the 2N/day SLA —
+  specifically on days when Vijayan and/or Rajesh are on WO.
+- Night is NOT their default. It is a gap-fill role only.
+- Within any week, shifts follow strict **M → A → N** order — no reversal:
+  - Once on A this week → remaining days must be A or N (not back to M)
+  - Once on N this week → remaining days must be N (not back to M or A)
+  - Valid: M M M M M / A A A A A / M M A A A / M A A N N / A A N N N
+  - Invalid: M A M / A M / N A / N M (any backward step) ✗
+- After a Night week → WO days act as natural rest before next week resets.
 
-### Special: Venkata Raju
+### Rule 4 — Dinesh (Day-Only)
+- Dinesh = **Morning (M) primarily**, Afternoon (A) occasionally.
+- **Never Night under any circumstance** — not even for SLA gap fill.
+- ES (Extended Shift 7AM–7PM) may be assigned occasionally.
+- WO = **SUN + MON** every week. SUN is an exception for Dinesh only
+  (all other L2 must not take SAT/SUN WO).
+
+### Rule 5 — Venkata Raju (Special)
 - Works **Night (N) for days 1–8** of the month only.
 - Has **2–3 WOs** within that 8-day window.
 - From day 9 onwards → **NA** (Not Available) for the rest of the month.
-- On days when Venkata covers Night (days 1–8), Vijayan is the 2nd Night worker.
 
 ---
 
 ## WO Assignment Rules
 
-### General Rules
-1. **No SAT/SUN WO for L2** — except Dinesh's SUN (his fixed pattern).
-2. **WO must be consecutive days** — never split across non-adjacent weekdays.
-3. **Target 8–9 WOs per L2 per month** depending on month length.
-4. **2 WOs per week** per L2 as the standard rhythm.
-5. **No SLA breach** — minimum 6 people working every single day.
+### WO Cap Rule (CRITICAL)
+- **WO cap per engineer = total number of SAT+SUN days in that month.**
+- Example: May 2026 has 5 SAT + 5 SUN = 10 → WO cap = 10 for everyone.
+- No engineer may exceed this count regardless of their pattern.
+- If the pattern generates more WOs than the cap → trim the excess.
+  When trimming, ask the engineer/manager which days to remove.
 
-### Fixed WO Patterns (derive actual day numbers from the month's calendar)
+### Consecutive WO Rule (CRITICAL)
+- **No more than 2 consecutive WO days for any engineer.**
+- All standard patterns (MON+TUE, TUE+WED, THU+FRI, WED+THU, SUN+MON)
+  produce exactly 2 consecutive days per week — this is by design.
+- Never assign 3 or more consecutive WO days.
+
+### No Weekend WO for L2 (except Dinesh's SUN)
+- L2 engineers must NOT have SAT or SUN as WO days.
+- **Exception**: Dinesh takes SUN as part of his SUN+MON pattern.
+- All other L2 WOs must be weekdays only.
+
+### Bank Saturday Rule (L3 only)
+- 1st, 3rd, and 5th Saturday of the month = bank working days.
+- At least one L3 must work on each bank Saturday.
+- **Rotation**: Purushothaman works 1st and 5th SAT; Syed works 3rd SAT.
+- **Compensation**: When an L3 works a bank Saturday → give WO on the
+  following Monday as comp off.
+  - If no Monday follows in that month (e.g., 5th SAT is last days) →
+    use the nearest available weekday before that Saturday (e.g., Friday).
+- On non-bank Saturdays (2nd and 4th) → both L3 take WO normally.
+
+### Fixed WO Patterns (map to actual dates each month)
+
 | Engineer | WO Pattern | Notes |
 |---|---|---|
-| Vijayan | MON + TUE | Fixed, permanent Night-only |
-| Rajesh | TUE + WED | Fixed, consecutive, avoids Vijayan overlap |
-| Srinivasan | THU + FRI | Rotational L2 |
-| Srinivasulu | TUE + WED | Rotational L2 |
-| Saravanan | THU + FRI | Rotational L2 |
-| VaraPrasad | WED + THU | Rotational L2 |
-| Dinesh | SUN + MON | Day-only, SUN exception allowed |
-
-### SLA Validation Logic
-- Count working people per day = Total team − WO − Leave − NA
-- Minimum = **6 people working every day** (including L3)
-- Max **2 Night workers per day** (caps Night shift at exactly 2)
-- On Vijayan+Rajesh joint WO days (every TUE): Night must come entirely
-  from rotational L2 — ensure at least 1 rotational L2 is on Night that day.
-
-### WO Safety Check Before Finalising
-For each proposed WO day, verify:
-- Adding this person's WO does not drop working count below 6.
-- THU is typically unsafe (Srinivasan + Saravanan + VaraPrasad all WO on THU).
-- SUN is typically unsafe (Syed + Purushothaman + Dinesh all WO on SUN).
-- Rajesh cannot take MON/TUE WO (Vijayan already WO → 0 dedicated Night workers).
-- Rajesh cannot take THU WO (3 already off → SLA breach).
+| Syed Ali L3 | SAT + SUN every week | Remove bank SAT, add comp MON |
+| Purushothaman L3 | SAT + SUN every week | Remove bank SAT, add comp MON |
+| Vijayan L2 | MON + TUE | Permanent Night-only |
+| Rajesh Chandran L2 | TUE + WED | Permanent Night-only, consecutive |
+| Srinivasan Palraj L2 | THU + FRI | Rotational M/A, N for SLA gap only |
+| Reddy Srinivasulu L2 | TUE + WED | Rotational M/A, N for SLA gap only |
+| Saravanan L2 | THU + FRI | Rotational M/A, N for SLA gap only |
+| VaraPrasad L2 | WED + THU | Rotational M/A, N for SLA gap only |
+| Dinesh L2 | SUN + MON | Day-only, SUN exception |
 
 ---
 
-## Shift Rotation Rule (M → A → N)
+## SLA Rules
 
-Within any given week for rotational L2:
-```
-Valid:   M M M M M  (all morning)
-Valid:   A A A A A  (all afternoon)
-Valid:   N N N N N  (all night)
-Valid:   M M A A A  (morning then afternoon)
-Valid:   M A A N N  (morning → afternoon → night)
-Valid:   A A N N N  (afternoon then night)
-Invalid: M A M ...  (back to M after A) ✗
-Invalid: A M ...    (A then M) ✗
-Invalid: N A ...    (N then A) ✗
-Invalid: N M ...    (N then M) ✗
-```
-Once the shift level goes up within a week, it cannot come back down.
+### Daily Headcount SLA
+- **Minimum 6 people working every day** (includes L3 + L2).
+- This is the Jio commitment to Indian Bank.
+- Count working = total team − WO − Leave − NA − CO − DH.
+
+### Night Shift SLA
+- **Exactly 2 Night workers per day** (max and target).
+- Primary Night: Vijayan + Rajesh cover 2N on their working days.
+- On Vijayan/Rajesh WO days: rotational L2 fill the Night gap.
+- Every TUE: both Vijayan+Rajesh on WO → rotational L2 must provide 2N.
+- Every MON: Vijayan WO, Rajesh works → Rajesh = 1N, rotational L2 fill 2nd N.
+
+### Morning and Afternoon SLA
+- **Minimum 2 Morning workers per day.**
+- **Minimum 2 Afternoon workers per day.**
+- L3 contribute: Syed=A always, Puru=M always (when not on WO/Leave).
+
+### SLA Unsafe Days (by pattern — always check these)
+- **THU**: Srinivasan + Saravanan + VaraPrasad all on WO → 3 off. Adding
+  Rajesh WO on THU would be 4 off → unsafe. Rajesh must NOT use THU.
+- **SUN**: Syed + Puru + Dinesh all on WO → 3 off. No additional L2 WO on SUN.
+- **TUE**: Vijayan + Rajesh + Srinivasulu all on WO → rotational L2 must cover Night.
 
 ---
 
-## Excel Output Format (match existing template)
+## WO Safety Validation Checklist
 
-### Sheet structure
-- **Row 1**: Title — "Attendance Report for THE MONTH OF [MONTH YEAR]"
-- **Row 2**: Headers — Skill | Mob No | Location | Name | D1..D31 | WO | G | M | A | N | PL Applied | DH Availed | CO Available | No of working Days
-- **Row 3**: Day numbers (1 to 31)
-- **Rows 4+**: One row per engineer with shift codes per day
-- **Bottom section**: Shift count summary rows (M, A, N, ES, G, WO, PL, CO, DH, L counts per day)
+Before finalising WOs each month:
+1. Map all pattern-based WO days to actual dates of the new month.
+2. Count total WOs per person → must not exceed SAT+SUN count for that month.
+3. Check no 3+ consecutive WO days for anyone.
+4. Check L2 WOs are weekdays only (except Dinesh's SUN).
+5. For each day: count people on WO + Leave + NA → working must be ≥ 6.
+6. For each day: count Night workers → must be exactly 2 (or flag if <2).
+7. On bank Saturdays → verify at least 1 L3 is working.
+8. On Vijayan+Rajesh joint WO days (every TUE) → verify rotational L2 covers 2N.
 
-### Color coding
-- M (Morning): Light blue `#D6E8FF`
-- A (Afternoon): Light green `#D5F5E3`
-- N (Night): Light orange `#FCE4D6`
-- WO (Week Off): Light green `#EAF4EA`
-- L (Leave): Light yellow `#FFF9C4`
-- NA (Not Available): Light grey `#EEEEEE`
-- Header rows: Dark navy `#1F4E79`
-- Weekend day name cells: Red `#C00000`
-- Weekday day name cells: Blue `#2E75B6`
+---
 
-### Summary columns (after day columns)
-- WO count
-- G (General) count
-- M count
-- A count
-- N count
-- PL Applied
-- DH Availed
-- CO Available
-- No of Working Days
+## Night Coverage on Critical Days
 
-### Per-person working days formula
-`= Total days − WO − Leave − NA − CO − DH`
+| Day Pattern | Vijayan | Rajesh | Fixed Night | Action Needed |
+|---|---|---|---|---|
+| MON | WO | Working (N) | 1N | 1 rotational L2 → N |
+| TUE | WO | WO | 0N | 2 rotational L2 → N |
+| WED | Working (N) | WO | 1N | 1 rotational L2 → N |
+| THU–FRI–SAT–SUN | Working (N) | Working (N) | 2N | No action needed |
+
+Rotational L2 available for Night gap-fill (not on WO those days):
+- MON: Srinivasan ✓, Saravanan ✓, VaraPrasad ✓ (Srinivasulu WO on TUE/WED — check)
+- TUE: Srinivasan ✓, Saravanan ✓ (Srinivasulu WO, VaraPrasad WO on WED/THU)
+- WED: Srinivasan ✓, Saravanan ✓ (check their THU/FRI WO pattern)
 
 ---
 
 ## Month Preparation Checklist
 
-Before generating any roster:
-1. **Confirm month and year** → map exact day names (MON–SUN) to dates
-2. **Identify bank Saturdays** → 1st, 3rd, 5th Saturday
-3. **Collect approved leaves** → per person, exact days
-4. **Note team changes** → any additions, removals, or role changes
-5. **Derive WO days** from fixed patterns mapped to the new month's calendar
-6. **Validate WO safety** → run SLA check for all 31/30 days
-7. **Assign shifts** → L3 first (fixed), Night-only next, then rotational L2
-8. **Validate shift rotation** → no M→A reversal, no A→M, no N→M/A within week
-9. **Validate Night cap** → max 2N per day
-10. **Generate Excel** → match existing template format exactly
-11. **Add shift count summary** → per person M/A/N/WO/L/NA totals at end of sheet
+1. Confirm month and year → map exact day names to all dates.
+2. Count SAT+SUN in the month → set WO cap for all engineers.
+3. Identify 1st, 3rd, 5th Saturdays → bank working Saturdays.
+4. Collect approved leaves per person.
+5. Note team changes (joining, leaving, role changes).
+6. Compute WO days from fixed patterns mapped to new month's calendar.
+7. Apply bank Saturday rule for L3 → remove bank SAT from WO, add comp MON.
+8. Validate WO safety: cap check, consecutive check, SLA check (min 6/day).
+9. Assign shifts:
+   - L3: fixed (Syed=A, Puru=M) with WO/Leave.
+   - Vijayan: N always, WO on pattern days.
+   - Rajesh: N always, WO on pattern days.
+   - Dinesh: M/A rotation, WO SUN+MON, never Night.
+   - Rotational L2: M/A weekly blocks, N only for SLA gap-fill on Vijayan/Rajesh WO days.
+10. Validate shift rotation: no backward step (M→A→N only within each week).
+11. Validate Night cap: exactly 2N per day.
+12. Generate Excel in existing template format.
+13. Add per-person shift count summary (M/A/N/WO/L/NA/Working Days).
 
 ---
 
-## Night Coverage Priority on Critical Days
+## Excel Output Format
 
-On days where both Vijayan and Rajesh are WO (every TUE in the month):
-- Rotational L2 must cover Night
-- Prefer: assign Srinivasulu or VaraPrasad to Night that week
-- Srinivasan and Saravanan share THU+FRI WO so they are available on TUE
+### Sheet structure
+- Row 1: "Attendence Report for THE MONTH OF [MONTH YEAR]"
+- Row 2: Skill | Mob No | Location | Name | D1..D(n) | WO | G | M | A | N | PL Applied | DH Availed | CO Available | No of working Days
+- Row 3: Day numbers (1 to n)
+- Rows 4+: One row per engineer with shift codes per day
+- Bottom: Shift type count rows (M/A/N/ES/G/WO/PL/CO/DH/L counts per day)
 
-On days where Vijayan is WO and Rajesh is working (MON):
-- Rajesh alone covers Night (1 dedicated + rotational if needed for 2N)
+### Color coding
+| Code | Color | Hex |
+|---|---|---|
+| M | Light blue | #D6E8FF |
+| A | Light green | #D5F5E3 |
+| N | Light orange | #FCE4D6 |
+| WO | Light grey-green | #EAF4EA |
+| L | Light yellow | #FFF9C4 |
+| NA | Light grey | #EEEEEE |
+| Header | Dark navy | #1F4E79 |
+| Weekend day names | Red | #C00000 |
+| Weekday day names | Blue | #2E75B6 |
+
+### Summary columns (right side of day columns)
+WO count | G count | M count | A count | N count | PL Applied | DH Availed | CO Available | No of Working Days
+
+### Working days formula
+Total days − WO − Leave − NA − CO − DH
 
 ---
 
 ## Reference: April 2026 Actual Roster (Source of Truth)
 
-Extracted from uploaded Book1.xlsx (DC_DR_April_Final):
+From uploaded Book1.xlsx (sheet: DC_DR_April_Final):
 
 ```
-Syed Ali:       A A L WO WO A A A A A WO WO A L  A A A A WO WO A A A A WO WO M A A A
-Purushothaman:  M M M M WO WO M M M M WO WO CO L  M M M WO WO M M M L  M WO WO M M M M
-Srinivasan:     A N WO WO M M A A WO WO A A A A A  WO WO M M A A A WO WO A A A L  L WO
-Venkata Raju:   N WO WO WO A N N N NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
-Rajesh:         WO A N N N N N WO N N N N N N WO N N N N WO N N WO WO WO WO L  A N N
-Srinivasulu:    WO WO A A A A WO WO A A A A M WO WO A A A A N WO WO N N N N N WO A A
-Saravanan:      M WO WO M M M M M WO WO M M N N N WO WO M M A WO WO A A A A A N WO A
-Dinesh:         M M M A WO WO M M M M WO WO M ES M M M M WO M M M M M M WO WO M M WO
-Vijayan:        N N N N N WO WO N N N N N WO WO N N N N N WO WO N N N N N WO WO N N
-VaraPrasad:     WO WO A A A WO WO L L M M M M M WO WO M A A N N WO M M M ES N N WO M
+Days:           1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+Day names:     WED THU FRI SAT SUN MON TUE WED THU FRI SAT SUN MON TUE WED THU FRI SAT SUN MON TUE WED THU FRI SAT SUN MON TUE WED THU
+
+Syed Ali:       A  A  L WO WO  A  A  A  A  A WO WO  A  L  A  A  A  A WO WO  A  A  A  A WO WO  M  A  A  A
+Purushothaman:  M  M  M  M WO WO  M  M  M  M WO WO CO  L  M  M  M WO WO  M  M  M  L  M WO WO  M  M  M  M
+Srinivasan:     A  N WO WO  M  M  A  A WO WO  A  A  A  A  A WO WO  M  M  A  A  A WO WO  A  A  A  L  L WO
+Venkata Raju:   N WO WO WO  A  N  N  N NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+Rajesh:        WO  A  N  N  N  N  N WO  N  N  N  N  N  N WO  N  N  N  N WO  N  N WO WO WO WO  L  A  N  N
+Srinivasulu:   WO WO  A  A  A  A WO WO  A  A  A  A  M WO WO  A  A  A  A  N WO WO  N  N  N  N  N WO  A  A
+Saravanan:      M WO WO  M  M  M  M  M WO WO  M  M  N  N  N WO WO  M  M  A WO WO  A  A  A  A  A  N WO  A
+Dinesh:         M  M  M  A WO WO  M  M  M  M WO WO  M ES  M  M  M  M WO  M  M  M  M  M  M WO WO  M  M WO
+Vijayan:        N  N  N  N  N WO WO  N  N  N  N  N WO WO  N  N  N  N  N WO WO  N  N  N  N  N WO WO  N  N
+VaraPrasad:    WO WO  A  A  A WO WO  L  L  M  M  M  M  M WO WO  M  A  A  N  N WO  M  M  M ES  N  N WO  M
 ```
 
-Shift counts (April actuals):
-- Vijayan: N=22, WO=8
-- Rajesh: N=19, A=2, WO=8, L=1
-- Syed Ali: A=19, M=1, WO=8, L=2
-- Purushothaman: M=19, WO=8, L=2, CO=1
-- Dinesh: M=20, A=1, WO=8, ES=1
-- Srinivasan: A=14, M=4, N=1, WO=9, L=2
-- Srinivasulu: A=14, M=1, N=6, WO=9
-- Saravanan: M=10, A=7, N=4, WO=9
-- VaraPrasad: M=10, A=5, N=4, WO=8, L=2, ES=1
+April 2026 actuals:
+- Vijayan:      N=22 WO=8
+- Rajesh:       N=19 A=2 WO=8 L=1
+- Syed Ali:     A=19 M=1 WO=8 L=2
+- Purushothaman:M=19 WO=8 L=2 CO=1
+- Dinesh:       M=20 A=1 WO=8 ES=1
+- Srinivasan:   A=14 M=4 N=1 WO=9 L=2
+- Srinivasulu:  A=14 M=1 N=6 WO=9
+- Saravanan:    M=10 A=7 N=4 WO=9
+- VaraPrasad:   M=10 A=5 N=4 WO=8 L=2 ES=1
+
+Note: Srinivasan/Srinivasulu/Saravanan/VaraPrasad show some N in April
+because they filled Night SLA gaps on Vijayan/Rajesh WO days.
+This is correct and expected — Night is allowed for SLA gap-fill only.
+
+---
+
+## Key Decisions Log
+
+| Decision | Rule | Reason |
+|---|---|---|
+| Rajesh WO = TUE+WED | Consecutive, avoids MON/TUE | MON+TUE = Vijayan WO → 0 dedicated Night. THU unsafe (3 others off). |
+| WO cap = SAT+SUN count | Per month | Fairness — WO mirrors natural weekend count of that month. |
+| No 3+ consecutive WO | Quality of life | Engineer cannot have 3+ days off consecutively. |
+| Rotational L2 Night = SLA gap only | Not primary | Primary Night = Vijayan+Rajesh only. Others fill when needed. |
+| L3 bank SAT comp = next MON | Policy | Working bank SAT earns a comp Monday off. |
+| No SAT/SUN WO for L2 | Policy | Except Dinesh's SUN which is his fixed pattern exception. |
+| M→A→N weekly order | Shift health | No juggling shifts within a week. Once progressed, no reversal. |
