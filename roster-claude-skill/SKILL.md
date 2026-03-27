@@ -351,3 +351,82 @@ This is correct and expected — Night is allowed for SLA gap-fill only.
 | L3 bank SAT comp = next MON | Policy | Working bank SAT earns a comp Monday off. |
 | No SAT/SUN WO for L2 | Policy | Except Dinesh's SUN which is his fixed pattern exception. |
 | Shift assignment = SLA-driven | Shift health | No fixed weekly block. Each day assigned based on SLA need. Physical rest constraints: A→M invalid (10PM→7AM), N→M/A invalid (need WO rest after Night). After Night block → WO before any shift. |
+
+---
+
+## WO Adjustment for Leave-Driven SLA Breaches
+
+### When to Apply
+After approved leaves are entered, run a daily SLA check (working = 9 − WO − Leave).
+If any day drops below 6 → attempt WO adjustment before accepting the breach.
+
+### Who Can Be Adjusted
+Only these engineers' WOs are eligible for adjustment:
+- **Reddy Srinivasulu** (Rotational L2)
+- **Saravanan** (Rotational L2)
+- **VaraPrasad** (Rotational L2)
+
+**Never adjust WOs for:**
+- Syed Ali or Purushothaman Kumar (L3 — fixed SAT+SUN pattern + bank SAT rules)
+- Vijayan or Rajesh Chandran (Night-only — fixed MON+TUE / TUE+WED pattern)
+- Srinivasan Palraj (Rotational L2 — excluded per team decision)
+- Dinesh Ananthaneni (Day-only — fixed SUN+MON pattern)
+
+### Adjustment Rules
+1. **Identify** breach day — count who is off (WO + Leave). If adjustable L2 is on WO that day → eligible for removal.
+2. **Remove** the WO from the breach day → engineer now works that day.
+3. **Move** the removed WO to the nearest safe alternate day:
+   - Must be a **weekday** (no SAT/SUN)
+   - Must not already be a WO or Leave day for that engineer
+   - Moving the WO to the alternate day must **not cause a new breach** (avail ≥ 6 after move)
+   - Must not create **3+ consecutive WO days**
+   - Prefer days close to the original (within same or adjacent week)
+4. **WO count stays the same** — same total WOs, just shifted. Never add extra WOs.
+5. **Repeat** per breach day until all fixable breaches are resolved.
+
+### Structurally Unfixable Breaches
+Some breach days cannot be fixed with WO adjustment alone. These occur when:
+- All adjustable L2 are on **Leave** (not WO) that day — leaves cannot be moved by this process
+- Even removing all adjustable WOs, the headcount still stays below 6 (too many L3 + Rajesh on leave simultaneously)
+- No safe alternate day exists for the moved WO (all candidates create new breaches or consecutive violations)
+
+For these days → **flag to manager** for leave cancellation or escalation. Do not force an invalid adjustment.
+
+### May 2026 Example (Source of Truth)
+Original breach days: D5, D6, D14, D17, D21, D27, D28, D29
+
+Adjustments applied:
+| Engineer | WO Removed | Moved To | Breach Fixed |
+|---|---|---|---|
+| Reddy Srinivasulu | D5 (TUE) | D8 (FRI) | D5 ✓ |
+| Reddy Srinivasulu | D6 (WED) | D1 (FRI) | D6 ✓ |
+| Saravanan | D14 (THU) | D11 (MON) | D14 ✓ |
+| Saravanan | D21 (THU) | D25 (MON) | D21 ✓ |
+| Reddy Srinivasulu | D27 (WED) | D15 (FRI) | D27 ✓ |
+
+Residual breaches (unfixable by WO adjustment):
+- **D17 (SUN):** Syed+Puru+Vijayan(L)+Dinesh all off — no adjustable L2 on WO that day
+- **D28 (THU):** Syed(L)+Puru(L)+Rajesh(L)+Srinivasan(WO)+Saravanan(WO)+VaraPrasad(WO) — even removing all L2 WOs gives max 5
+- **D29 (FRI):** Syed(L)+Puru(WO)+Rajesh(L)+Srinivasan(WO)+Saravanan(WO) — max possible is 5
+
+Final adjusted WO schedule (May 2026):
+| Engineer | Adjusted WO Days |
+|---|---|
+| Reddy Srinivasulu | 1, 8, 12, 13, 15, 19, 20, 26 |
+| Saravanan | 1, 7, 8, 11, 15, 22, 25, 28, 29 |
+| VaraPrasad | 6, 7, 13, 14, 20, 21, 27, 28 (no change needed) |
+
+### Night Distribution After Adjustment
+Rotational L2 Night counts should remain near-equal after WO adjustment.
+Target: max 2-night difference between any two rotational L2 engineers.
+- Acceptable: N=4,4,6,6 ✓
+- Not acceptable: N=0,0,9,9 ✗
+
+### Updated Month Preparation Checklist (with Leave Adjustment)
+1. Confirm month → map WO patterns → validate WO cap and consecutive rules.
+2. Collect approved leaves.
+3. Run daily SLA check: working = 9 − WO − Leave ≥ 6 every day.
+4. For each breach day → attempt WO adjustment (Srinivasulu / Saravanan / VaraPrasad only).
+5. Re-run SLA check after each adjustment → confirm no new breaches created.
+6. Flag residual unfixable breaches to manager.
+7. Assign shifts → validate rest constraints → validate Night cap → generate Excel.
